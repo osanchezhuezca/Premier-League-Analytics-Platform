@@ -8,20 +8,71 @@ export default function HistoricalData() {
   const [selectedSeason, setSelectedSeason] = useState("");
   const [matches, setMatches] = useState([]);
 
-  // ===== Back to Top state =====
   const [showButton, setShowButton] = useState(false);
 
-  // Show/hide Back to Top button on scroll
   useEffect(() => {
-    const handleScroll = () => {
-      setShowButton(window.scrollY > 300);
-    };
-
+    const handleScroll = () => setShowButton(window.scrollY > 300);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // === Premier League teams ===
+  // ================================
+  // TEAM LOGOS – EXACT FILENAMES
+  // ================================
+  const teamLogos = {
+    "Arsenal": "/logos/arsenal.png",
+    "Aston Villa": "/logos/aston_villa_logo.png",
+    "Blackburn Rovers": "/logos/blackburn_rovers.png",
+    "Blackpool": "/logos/blackpool_fc_logo_svg.png",
+    "Bolton Wanderers": "/logos/bolton_wanderers_f_c.png",
+    "Bournemouth": "/logos/a_f_c_bournemouth.png",
+    "Brentford": "/logos/brentford_fc_crest_svg.png",
+    "Brighton": "/logos/brighton.png",
+    "Burnley": "/logos/burnley.png",
+    "Cardiff City": "/logos/cardiff_city_crest_svg.png",
+    
+    "Chelsea": "/logos/chelsea.png",
+    "Coventry City": "/logos/coventry_city_fc_crest_svg.png",
+    "Crystal Palace": "/logos/crystal_palace_logo.png",
+    "Derby County": "/logos/derby_county_crest_svg.png",
+    "Everton": "/logos/everton_fc_logo_svg.png",
+    "Fulham": "/logos/fullham.png",
+    
+    "Hull City": "/logos/hull_city_a_f_c_logo_svg.png",
+    "Ipswich Town": "/logos/ipswich_town.png",
+    "Leeds United": "/logos/leeds_united_f_c_logo_svg.png",
+    "Leicester City": "/logos/leicester_city_crest_svg.png",
+    "Liverpool": "/logos/liverpool_f_c.png",
+    "Luton Town": "/logos/luton_town.png",
+    "Man City": "/logos/manchester_city_fc_badge_svg.png",
+    "Manchester United": "/logos/manchester_united_fc_crest_svg.png",
+    "Middlesbrough": "/logos/middlesbrough_fc_logo.png",
+    "Newcastle United": "/logos/newcastle_united_logo.png",
+    "Norwich City": "/logos/norwich_city_fc_logo_svg.png",
+    "Nottingham Forest": "/logos/nottingham_forest_f_c_logo_svg.png",
+    "Portsmouth": "/logos/portsmouth_fc_logo_svg.png",
+    "Queens Park Rangers": "/logos/queens_park_rangers_crest_svg.png",
+    "Reading": "/logos/reading_fc_svg.png",
+    "Sheffield United": "/logos/sheffield_united_fc_logo_svg.png",
+    "Sheffield Wednesday": "/logos/sheffield_wednesday_badge_svg.png",
+    "Southampton": "/logos/fc_southampton_svg.png",
+    "Stoke City": "/logos/stoke_city.png",
+    "Sunderland": "/logos/logo_sunderland_svg.png",
+    "Swansea City": "/logos/swansea_city_afc_logo.png",
+    "Tottenham Hotspur": "/logos/tottenham_hotspur.png",
+    "Watford": "/logos/watford_svg.png",
+    "West Bromwich Albion": "/logos/west_bromwich_albion_svg.png",
+    "West Ham United": "/logos/west_ham_united_fc_logo.png",
+    "Wigan Athletic": "/logos/wigan_athletic.png",
+    "Wolverhampton Wanderers": "/logos/wolverhampton_wanderers_fc_crest.png",
+    "Charlton Athletic": "/logos/charlton_athletic.png",
+    "Huddersfield Town": "/logos/huddersfield_town.png",
+
+  };
+
+  // ================================
+  // TEAMS (same as before)
+  // ================================
   const teams = [
     { name: "Arsenal", stadium: "Emirates Stadium, London" },
     { name: "Aston Villa", stadium: "Villa Park, Birmingham" },
@@ -72,8 +123,9 @@ export default function HistoricalData() {
 
   const BACKEND_URL = process.env.REACT_APP_API_URL;
 
-
-  // === Select Team ===
+  // ================================
+  // SELECT TEAM
+  // ================================
   const handleSelect = async (team) => {
     setSelectedTeam(team);
     setSelectedSeason("");
@@ -81,9 +133,7 @@ export default function HistoricalData() {
     setLoadingSeasons(true);
 
     try {
-      const response = await fetch(
-        `${BACKEND_URL}/api/teams/${team.name}/seasons`
-      );
+      const response = await fetch(`${BACKEND_URL}/api/teams/${team.name}/seasons`);
       const data = await response.json();
       setSeasons(data);
     } catch (err) {
@@ -93,9 +143,9 @@ export default function HistoricalData() {
     setLoadingSeasons(false);
   };
 
-  // === Select Season ===
   const handleSeasonSelect = async (value) => {
     if (!value) return;
+
     const [id, code] = value.split("|");
 
     setSelectedSeason(code);
@@ -115,7 +165,6 @@ export default function HistoricalData() {
     setLoadingMatches(false);
   };
 
-  // === Reset ===
   const handleReset = () => {
     setSelectedTeam(null);
     setSeasons([]);
@@ -123,6 +172,9 @@ export default function HistoricalData() {
     setMatches([]);
   };
 
+  // ================================
+  // UI
+  // ================================
   return (
     <div
       style={{
@@ -148,17 +200,14 @@ export default function HistoricalData() {
               borderRadius: "8px",
               fontWeight: "600",
               cursor: "pointer",
-              transition: "background-color 0.3s",
             }}
-            onMouseEnter={(e) => (e.target.style.backgroundColor = "#00cc6f")}
-            onMouseLeave={(e) => (e.target.style.backgroundColor = "#00FF87")}
           >
             Select Another Team
           </button>
         )}
       </div>
 
-      {/* GRID VIEW */}
+      {/* GRID OF TEAMS */}
       {!selectedTeam ? (
         <div
           style={{
@@ -180,18 +229,34 @@ export default function HistoricalData() {
                 cursor: "pointer",
                 transition: "transform 0.3s, background-color 0.3s",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#1F2937")}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#111827")}
             >
+              {/* LOGO CIRCLE */}
               <div
                 style={{
-                  width: "45px",
-                  height: "45px",
+                  width: "55px",
+                  height: "55px",
                   margin: "0 auto 0.8rem",
                   borderRadius: "50%",
                   backgroundColor: "#00FF87",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
                 }}
-              ></div>
+              >
+                <img
+                  src={teamLogos[team.name]}
+                  alt={team.name}
+                  style={{
+                    width: "90%",
+                    height: "90%",
+                    objectFit: "contain",
+                    padding: "0",
+                    margin: "0",
+                  }}
+                />
+              </div>
+
               <h3 style={{ margin: "0.2rem 0", fontSize: "1.05rem" }}>{team.name}</h3>
               <p
                 style={{
@@ -209,7 +274,7 @@ export default function HistoricalData() {
           ))}
         </div>
       ) : (
-        // SELECTED TEAM VIEW
+        // SELECTED TEAM DATA VIEW
         <div style={{ display: "flex", justifyContent: "center", marginTop: "4rem" }}>
           <div
             style={{
@@ -230,10 +295,23 @@ export default function HistoricalData() {
                 backgroundColor: "#00FF87",
                 margin: "0 auto 1rem",
               }}
-            ></div>
+            >
+              <img
+                src={teamLogos[selectedTeam.name]}
+                alt={selectedTeam.name}
+                style={{
+                  width: "70%",
+                  height: "70%",
+                  objectFit: "contain",
+                  borderRadius: "50%",
+                }}
+              />
+            </div>
+
             <h2>{selectedTeam.name}</h2>
             <p style={{ color: "#9CA3AF" }}>{selectedTeam.stadium}</p>
 
+            {/* SEASON SELECTOR */}
             {loadingSeasons ? (
               <p>Loading seasons...</p>
             ) : seasons.length > 0 ? (
@@ -266,6 +344,7 @@ export default function HistoricalData() {
 
             {loadingMatches && <p>Loading matches...</p>}
 
+            {/* MATCH TABLE */}
             {selectedSeason && matches.length > 0 && !loadingMatches && (
               <div style={{ marginTop: "2rem", textAlign: "left" }}>
                 <h3 style={{ textAlign: "center", color: "#00FF87" }}>
@@ -300,11 +379,7 @@ export default function HistoricalData() {
                           }}
                         >
                           <td style={{ padding: "0.75rem" }}>
-                            {new Date(m.date).toLocaleDateString("en-GB", {
-                              day: "2-digit",
-                              month: "short",
-                              year: "numeric",
-                            })}
+                            {new Date(m.date).toLocaleDateString("en-GB")}
                           </td>
                           <td style={{ padding: "0.75rem", color: isHome ? "#00FF87" : "#E5E7EB" }}>
                             {m.home_team}
@@ -343,7 +418,6 @@ export default function HistoricalData() {
         </div>
       )}
 
-      {/* ===== BACK TO TOP BUTTON ===== */}
       {showButton && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -360,16 +434,6 @@ export default function HistoricalData() {
             cursor: "pointer",
             fontSize: "1.3rem",
             fontWeight: "bold",
-            boxShadow: "0 0 12px rgba(0,255,135,0.6)",
-            transition: "transform 0.25s ease, box-shadow 0.25s ease",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "scale(1.2)";
-            e.currentTarget.style.boxShadow = "0 0 16px rgba(0,255,135,0.9)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "scale(1)";
-            e.currentTarget.style.boxShadow = "0 0 12px rgba(0,255,135,0.6)";
           }}
         >
           ⮝
