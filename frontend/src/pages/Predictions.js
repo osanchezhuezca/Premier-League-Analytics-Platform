@@ -14,11 +14,13 @@ export default function Predictions() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const BACKEND_URL = process.env.REACT_APP_API_URL;
+
   // Fetch all seasons on mount
   useEffect(() => {
     async function fetchSeasons() {
       try {
-        const response = await fetch('http://localhost:5001/api/predictions/seasons');
+        const response = await fetch(`${BACKEND_URL}/api/predictions/seasons`);
         const data = await response.json();
         setSeasons(data);
       } catch (err) {
@@ -27,7 +29,7 @@ export default function Predictions() {
       }
     }
     fetchSeasons();
-  }, []);
+  }, [BACKEND_URL]);
 
   // Fetch home teams when home season changes
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function Predictions() {
       async function fetchHomeTeams() {
         try {
           const response = await fetch(
-            `http://localhost:5001/api/predictions/seasons/${homeSeasonId}/teams`
+            `${BACKEND_URL}/api/predictions/seasons/${homeSeasonId}/teams`
           );
           const data = await response.json();
           setHomeTeams(data);
@@ -46,7 +48,7 @@ export default function Predictions() {
       }
       fetchHomeTeams();
     }
-  }, [homeSeasonId]);
+  }, [homeSeasonId, BACKEND_URL]);
 
   // Fetch away teams when away season changes
   useEffect(() => {
@@ -54,7 +56,7 @@ export default function Predictions() {
       async function fetchAwayTeams() {
         try {
           const response = await fetch(
-            `http://localhost:5001/api/predictions/seasons/${awaySeasonId}/teams`
+            `${BACKEND_URL}/api/predictions/seasons/${awaySeasonId}/teams`
           );
           const data = await response.json();
           setAwayTeams(data);
@@ -65,7 +67,7 @@ export default function Predictions() {
       }
       fetchAwayTeams();
     }
-  }, [awaySeasonId]);
+  }, [awaySeasonId, BACKEND_URL]);
 
   const handlePredict = async () => {
     if (!homeTeam || !awayTeam || !homeSeasonCode || !awaySeasonCode) {
@@ -78,7 +80,7 @@ export default function Predictions() {
     setPrediction(null);
 
     try {
-      const response = await fetch('http://localhost:5001/api/predictions/predict', {
+      const response = await fetch(`${BACKEND_URL}/api/predictions/predict`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

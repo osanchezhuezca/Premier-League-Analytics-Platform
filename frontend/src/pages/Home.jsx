@@ -23,7 +23,7 @@ export default function Home() {
       }
     }
     fetchTable();
-  }, []);
+  }, [BACKEND_URL]);
  
   // === Fetch Matches (Recent & Upcoming) ===
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function Home() {
       }
     }
     fetchMatches();
-  }, []);
+  }, [BACKEND_URL]);
  
   const predictions = [
     { team: "Liverpool", percent: 78 },
