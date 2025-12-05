@@ -24,6 +24,7 @@ class EnsembleModelTrainer:
         self.MODEL_DIR.mkdir(parents=True, exist_ok=True)
         self.min_accuracy = 0.90
         self.max_retrain_attempts = 5
+        self.max_home_bias = 0.10  # #2: Reduced from 0.15 to 0.10
 
     def load_features(self, feature_type):
         """Load pre-processed features"""
