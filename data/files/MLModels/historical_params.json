@@ -22,7 +22,7 @@
     "metric": "minkowski",
     "metric_params": null,
     "n_jobs": null,
-    "n_neighbors": 21,
+    "n_neighbors": 11,
     "p": 2,
     "weights": "distance"
   },
@@ -43,10 +43,12 @@
     "tol": 0.001,
     "verbose": false
   },
-  "val_accuracy": 0.6932021466905188,
+  "val_accuracy": 0.6949910554561717,
+  "val_adjusted_score": 0.6949910554561717,
   "attempt": 2,
   "has_low_home_bias": true,
-  "test_accuracy": 0.6970509383378016,
-  "test_f1_score": 0.687898285752656,
+  "test_accuracy": 0.7015192135835567,
+  "test_adjusted_score": 0.7015192135835567,
+  "test_f1_score": 0.6924794274121342,
   "num_features": 16
 }
