@@ -73,7 +73,7 @@ export default function Home() {
         <h2 style={{ color: "#FF4D4D" }}>⚠️ Unable to load data</h2>
         <p style={{ color: "#9CA3AF" }}>
           Please ensure the backend is running on{" "}
-          <b>http://localhost:5000</b> and the API key in <b>pginfo.env</b> is valid.
+          <b>{BACKEND_URL || 'the configured URL'}</b> and the API key in <b>pginfo.env</b> is valid.
         </p>
       </div>
     );

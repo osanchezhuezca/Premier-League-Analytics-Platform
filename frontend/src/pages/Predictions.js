@@ -20,8 +20,7 @@ export default function Predictions() {
   useEffect(() => {
     async function fetchSeasons() {
       try {
-        const response = await fetch(`${BACKEND_URL}/api/predictions/seasons`);
-        const data = await response.json();
+        const response = await fetch(`${BACKEND_URL}/api/seasons`);        const data = await response.json();
         setSeasons(data);
       } catch (err) {
         console.error('Error fetching seasons:', err);
@@ -37,7 +36,7 @@ export default function Predictions() {
       async function fetchHomeTeams() {
         try {
           const response = await fetch(
-            `${BACKEND_URL}/api/predictions/seasons/${homeSeasonId}/teams`
+            `${BACKEND_URL}/api/seasons/${homeSeasonId}/teams`
           );
           const data = await response.json();
           setHomeTeams(data);
@@ -56,7 +55,7 @@ export default function Predictions() {
       async function fetchAwayTeams() {
         try {
           const response = await fetch(
-            `${BACKEND_URL}/api/predictions/seasons/${awaySeasonId}/teams`
+            `${BACKEND_URL}/api/seasons/${homeSeasonId}/teams`
           );
           const data = await response.json();
           setAwayTeams(data);
