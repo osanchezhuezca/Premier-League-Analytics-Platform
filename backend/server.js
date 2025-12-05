@@ -29,7 +29,7 @@ app.use("/api/predictions", predictionsRoutes);
 // HEALTH CHECK
 // =====================================================
 app.get("/", (req, res) => {
-res.send("✅ Futstat Backend is running ⚽");
+res.send("✅ Futstat Backend is running smoothly! ⚽");
 });
 
 app.get("/test-db", async (req, res) => {
