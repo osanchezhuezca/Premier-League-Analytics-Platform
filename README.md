@@ -1,7 +1,7 @@
 # COMP-330-Group-Project
 This is a group Software Engineering Project for COMP 330 at Loyola University Chicago. 
 
-**Futstat** is a full-stack Premier League analytics platform that provides live match scores, intelligent predictions, and rich historical team statistics — all in one modern dashboard.
+**Futstat** is a full-stack Premier League analytics platform that provides live match scores, intelligent predictions, and rich historical team statistics — all in one modern dashboard.  https://eplanalyticsplatform.vercel.app/
 
 # Overview
 Futstat helps football fans and analysts explore real-time and historical Premier League data.  
